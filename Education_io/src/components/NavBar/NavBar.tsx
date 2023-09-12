@@ -1,38 +1,82 @@
+import { useEffect} from "react";
 import React from "react";
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import NavBarList from "./NavBarList/NavBarList.tsx";
+import {
+    Navbar,
+    Collapse,
+    Typography,
+    Button,
+    IconButton,
+} from "@material-tailwind/react";
+import {Bars3Icon, XMarkIcon,} from "@heroicons/react/24/outline";
+import { useNavigate } from 'react-router-dom';
 
-const NavBar : React.FC = () => {
+const  NavBar : React.FC = () =>{
+    const [openNav, setOpenNav] = React.useState(false);
+    const navigate = useNavigate();
 
-    //navbar component using react-bootstrap
+    // This function is used to close the navbar when the screen size is greater than 960px
+    useEffect(() => {
+        window.addEventListener(
+            "resize",
+            () => window.innerWidth >= 960 && setOpenNav(false)
+        );
+    }, []);
+
+
+    // This function is used to navigate to the SignUpPage page
+    const SignUpHandler = () => {
+         navigate('/SignUp');
+        console.log("SignUp");
+    }
+
     return (
-        <>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="#features">Features</Nav.Link>
-                            <Nav.Link href="#pricing">Pricing</Nav.Link>
-                            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Nav>
-                            <Nav.Link href="#deets">More deets</Nav.Link>
-                            <Nav.Link eventKey={2} href="#memes">
-                                Dank memes
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </>
+        <Navbar className="mx-auto max-w-screen-3xl" variant="filled">
+            <div className="flex items-center justify-between text-blue-gray-900">
+                <Typography
+                    as="a"
+                    href="#"
+                    variant="h6"
+                    className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+                >
+                    Material Tailwind
+                </Typography>
+                <div className="hidden lg:block">
+                    <NavBarList />
+                </div>
+                <div className="hidden gap-2 lg:flex">
+                    <Button variant="text" size="sm" color="blue-gray">
+                        Sign In
+                    </Button>
+                    <Button variant="gradient" size="sm" onClick={SignUpHandler}>
+                        Sign Up
+                    </Button>
+                </div>
+                <IconButton
+                    variant="text"
+                    color="blue-gray"
+                    className="lg:hidden"
+                    onClick={() => setOpenNav(!openNav)}
+                >
+                    {openNav ? (
+                        <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+                    ) : (
+                        <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+                    )}
+                </IconButton>
+            </div>
+            <Collapse open={openNav}>
+                <NavBarList/>
+                <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                    <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
+                        Sign In
+                    </Button>
+                    <Button variant="gradient" size="sm" fullWidth onClick={SignUpHandler}>
+                        Sign Up
+                    </Button>
+                </div>
+            </Collapse>
+        </Navbar>
     );
-};
-
+}
 export default NavBar

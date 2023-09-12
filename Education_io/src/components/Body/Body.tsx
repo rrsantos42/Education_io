@@ -10,19 +10,16 @@ interface Discipline {
     };
 }
 
-interface Disciplines {
-    disciplines: Discipline[];
-}
 const Body: React.FC = () =>{
 
-    const [disciplines, setDisciplines] = useState<Disciplines | []>([]);
+    const [disciplines, setDisciplines] = useState<[]>([]);
     const [Loading, setLoading] = useState<number>(1);
 
     // fetch data from api
     useEffect(()=>{
         const getData = async ()=>{
             const response = await axios.get("http://localhost:3000/disciplines");
-            const data: Disciplines = response.data;
+            const data: [] = response.data;
             setDisciplines(data);
             setLoading(0);
         }

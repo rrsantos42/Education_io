@@ -1,13 +1,14 @@
-import './App.css'
-import NavBar from "./components/NavBar/NavBar.tsx";
-import Body from "./components/Body/Body.tsx";
+import './App.scss'
+import {Routes, Route} from "react-router-dom";
+import LandingPage from "./Pages/LandingPage/LandingPage.tsx";
+import SignUpPage from "./Pages/SignUpPage/SignUpPage.tsx";
 function App() {
 
   return (
-    <>
-        <NavBar/>
-        <Body/>
-    </>
+    <Routes>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/signUp" element={<SignUpPage/>}/>
+    </Routes>
   )
 }
 
