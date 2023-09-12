@@ -3,16 +3,17 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 const disciplinesRoutes = require('./disciplinesRoutes');
 const PORT = 3000;
-
-// Initialize the Firebase Admin SDK
-const serviceAccount = require("./ApiKeys/test-api-dd92a-firebase-adminsdk-jbpzb-a00670d6d0.json");
+require("dotenv").config();
 
 // Initialize the Firebase Admin SDK
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://test-api-dd92a-default-rtdb.firebaseio.com"
+    credential: admin.credential.cert({
+        projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
+        clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
+        privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n')
+    }),
+    databaseURL: process.env.DATABASE_URL
 });
-
 admin.firestore();
 
 // initialize the express server
