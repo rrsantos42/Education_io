@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import CardComp from "./CardComp/CardComp.tsx";
 import "./Body.css"
+import { useAuth } from '../../Context/ContextAuth';
 interface Discipline {
     id: number;
     discipline: {
@@ -14,9 +15,11 @@ const Body: React.FC = () =>{
 
     const [disciplines, setDisciplines] = useState<[]>([]);
     const [Loading, setLoading] = useState<number>(1);
-
+    const { currentUser } = useAuth();
     // fetch data from api
     useEffect(()=>{
+        if (currentUser)
+            console.log(currentUser);
         const getData = async ()=>{
             const response = await axios.get("http://localhost:3000/disciplines");
             const data: [] = response.data;
