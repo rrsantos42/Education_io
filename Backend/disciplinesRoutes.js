@@ -18,6 +18,22 @@ router.get("/",async (req, res) => {
     }
 });
 
+// sample endpoint to get data from Firestore by id
+router.get("/:id", async (req, res) => {
+    try {
+        const {id} = req.params;
+        const dbRef = admin.database().ref('disciplines');
+        dbRef.child(id).once('value', (snapshot) => {
+            const data = snapshot.val();
+            res.json(data);
+            console.log("Send data to", req.ip)
+        });
+    } catch (error) {
+        res.status(500).send("Error fetching data from Firebase.");
+    }
+});
+
+
 // Sample endpoint to add data to Firestore
 router.post("/", async (req, res) => {
     try {

@@ -13,6 +13,7 @@ import { useNavigate} from 'react-router-dom';
 import { useAuth} from '../../Context/ContextAuth';
 import {signOut, onAuthStateChanged } from "firebase/auth";
 import auth from "../../Services/firebaseconfig"
+import LogOut from "./LogOut/LogOut.tsx";
 
 const  NavBar : React.FC = () =>{
     const [openNav, setOpenNav] = React.useState(false);
@@ -45,16 +46,6 @@ const  NavBar : React.FC = () =>{
         console.log("SignIn");
     }
 
-    const LogOutHandler = async () => {
-        try {
-            await signOut(auth);  // Sign out using Firebase auth.
-            console.log("User signed out with success!");
-        } catch (err) {
-            console.error("Error during sign out:", err);
-        }
-    }
-
-
     return (
         <Navbar className="mx-auto max-w-screen-3xl" variant="filled">
             <div className="flex items-center justify-between text-blue-gray-900">
@@ -71,9 +62,7 @@ const  NavBar : React.FC = () =>{
                 </div>
                 <div className="hidden gap-2 lg:flex">
                     {isLoggedIn ? (
-                        <Button variant="text" size="sm" color="blue-gray" onClick={LogOutHandler}>
-                            Log Out
-                        </Button>
+                        <LogOut auth={auth}/>
                     ) : (
                         <>
                             <Button variant="text" size="sm" color="blue-gray" onClick={SignInHandler}>

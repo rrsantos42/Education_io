@@ -7,13 +7,7 @@ import {
     Button,
 } from "@material-tailwind/react";
 import React from "react";
-
-interface Discipline {
-    id: number;
-    discipline: {
-        [key: string]: string[];
-    };
-}
+import {Discipline} from "../../../Interfaces/Interfaces.ts";
 interface Props {
     Discipline: Discipline;
 }

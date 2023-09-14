@@ -4,12 +4,7 @@ import axios from "axios";
 import CardComp from "./CardComp/CardComp.tsx";
 import "./Body.css"
 import { useAuth } from '../../Context/ContextAuth';
-interface Discipline {
-    id: number;
-    discipline: {
-        [key: string]: string[];
-    };
-}
+import {Discipline} from "../../Interfaces/Interfaces.ts";
 
 const Body: React.FC = () =>{
 

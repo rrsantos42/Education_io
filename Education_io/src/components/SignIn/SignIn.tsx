@@ -26,7 +26,7 @@ const SignIn: React.FC = () => {
             }
 
         } catch (err) {
-            setError(err.message); 
+            setError(err.message);
             console.error("Error during sign in:", err);
         }
     };
